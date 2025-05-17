@@ -1,56 +1,96 @@
-# TS Hybrid Boilerplate
-Another boilerplate for ts projects, especifically to ts npm packages
+# Strava API Client (JavaScript)
 
+A modern JavaScript client for the [Strava v3 REST API](https://developers.strava.com/docs/reference/), based on the official [Swagger definition](https://developers.strava.com/swagger/swagger.json). This wrapper simplifies working with Strava’s endpoints, providing a consistent and promise-friendly interface for Node.js or browser-based apps.
 
-## Description
-A boiler plate that allow to generate TS hybrid packages with `mjs` and `cjs`
+> ⚡ Built on OpenAPI, fully type-safe (if used with TypeScript), and ideal for automation, fitness dashboards, or custom Strava integrations.
 
-## Build package
-Simply run `npm run build` and hybrid package will be generate
-NOTE: Files under ./mjs will be reemplace lines with ".class" to ".class.js" to be compatible with browsers
+---
 
-#### Notes for MJS
+## 🚀 Features
 
-For `mjs` with `mjs-formatter.sh` all is OK because exists top level await.
-Check index.ts to find out that import is with `.js` instead of file without extension
+- 🔐 OAuth2 token handling (access/refresh support)
+- 🏃 Full coverage of the Strava v3 API
+- 📦 Lightweight and dependency-friendly
+- 📘 Full TypeScript support
+- 📈 Promise-based interface
+- 🌐 Works in both Node.js and browsers
 
-### Notes for CJS
+---
 
-For `cjs` the process is to remove with `cjs-formatter` all top level awaits from `index.js` and use an eval to perform a `require`
+## 📦 Installation
 
-As `mjs` find out that require is with `.js`
-
-## Example of import
-
-#### Installation
-``` bash
-npm i ts-hybrid-boilerplate
+```bash
+npm install strava-api-client
 ```
 
-#### Import in ES6 (Node/Web)
-``` ts
+## 🛠️ Usage
+Initialize the client
+```ts
+import Strava from 'strava-api-client';
 
-import { HelloWorld } from 'ts-hybrid-boilerplate';
-
+const strava = new Strava({
+    client_id: 'your_client_id', // Strava API client ID
+    client_secret: 'your_client_secret', // Strava API client secret
+    redirect_uri: 'your_redirect_uri', // Strava API redirect URI
+    scopes: ['view_private', 'read_all'], // Strava API scopes
+});
 ```
 
-#### Import in CommonJS
-``` js
-
-const { HelloWorld } = require('ts-hybrid-boilerplate');
-
+Login
+```ts
+// Get the authorization URL
+const url = strava.oauth.authorize();
+// Redirect the user to the URL
+window.location.href = url;
+// Handle the authorization callback
+const authorization = await strava.oauth.token(window.location.hash.split('?')[1]);
+// Your Strava access token
+console.log(authorization.access_token); 
 ```
 
-## Release
-At this moment package support `github` and `gitlab` CI/CD
-Configure env vars to handle it.
+Example: Get Athlete Profile
+```ts
+const profile = await strava.athlete.me();
+console.log(profile.username); // your Strava username
+```
 
-- `NPM_TOKEN`: Allow to deploy to `npmjs.com` configure `.npmrc` to push package to another package repository
-- `GH_TOKEN`: Allow to modify repository to add tags with releases (`GITHUB`)
-- `GITLAB_TOKEN`: Allo to modify repository to add tags with releases (`GITLAB`)
+Example: List Activities
+```ts
+const activities = await strava.athlete.activities({
+  per_page: 10,
+});
 
-Below it uses semantic-release so the semantic-release guide is: https://github.com/semantic-release/semantic-release
+activities.forEach(activity => {
+  console.log(activity.name, activity.distance);
+});
+```
 
-## NPM package to download and check compatibility
+## 🔐 Authentication
+This client assumes you already have a valid Strava OAuth2 access token. To obtain one:
 
-https://www.npmjs.com/package/ts-hybrid-boilerplate
+Register your app: Strava Developer Portal
+
+Use Strava’s OAuth flow to get an access token
+
+Optionally handle token refreshing via your backend
+
+Note: This library does not handle the OAuth2 authorization code flow directly.
+
+## 📘 API Reference
+This client wraps the official Strava OpenAPI spec. All endpoints and parameters are mapped 1:1.
+
+See the Strava API Docs for full endpoint definitions.
+
+## ✅ TypeScript Support
+This client includes full TypeScript types generated from the OpenAPI spec.
+
+```ts
+const athlete: Athlete = await strava.athlete.me();
+```
+
+🧭 Roadmap
+ - Token refresh helper
+
+ - Browser support via fetch-based HTTP adapter
+
+ - Webhooks & push subscriptions

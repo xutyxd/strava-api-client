@@ -18,6 +18,12 @@ cjs
 mjs
 test
 
+src/openapi/specification.json
+src/openapi/specification.d.ts
+openapi/specification.json
+openapi/specification.d.ts
+public/**/*
+
 # Coverage reports
 coverage
 

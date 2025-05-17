@@ -31,9 +31,15 @@ jobs:
           npm ci --cache .npm
         id: cache-deps
 
-      - name: Test
+      # - name: Test
+      #   run: |
+      #     npm run test
+
+      - name: OpenAPI
         run: |
-          npm run test
+          npm run openapi:download
+          npm run openapi:types
+        id: cache-openapi
 
       - name: Build
         run: |

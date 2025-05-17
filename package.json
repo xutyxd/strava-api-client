@@ -1,0 +1,47 @@
+{
+  "name": "ts-hybrid-boilerplate",
+  "version": "1.0.0",
+  "description": "Another boilerplate for ts projects, especifically to ts npm packages",
+  "type": "module",
+  "main": "cjs/index.js",
+  "module": "mjs/index.js",
+  "exports": {
+    ".": {
+      "import": "./mjs/index.js",
+      "require": "./cjs/index.js"
+    }
+  },
+  "files": [
+    "cjs",
+    "mjs"
+  ],
+  "scripts": {
+    "tsc": "tsc",
+    "build:commonjs": "rm -fr cjs/* && tsc -p tsconfig-cjs.json && bash cjs-formatter.sh",
+    "build:test": "rm -fr test/* && tsc -p tsconfig-test.json && bash cjs-formatter.sh",
+    "build:mjs": "rm -fr mjs/* && tsc -p tsconfig.json && bash mjs-formatter.sh",
+    "build": "npm run build:commonjs && npm run build:mjs && ./fixup.sh",
+    "clean": "npm prune --production",
+    "test": "npm run build:test && jest ./test --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xutyxd/ts-boilerplate.git"
+  },
+  "keywords": ["typescript", "hybrid", "mjs", "cjs", "boilerplate"],
+  "author": "XutyXD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xutyxd/ts-boilerplate/issues"
+  },
+  "homepage": "https://github.com/xutyxd/ts-boilerplate#readme",
+  "devDependencies": {
+    "@semantic-release/gitlab": "^9.2.0",
+    "@semantic-release/github": "^9.0.6",
+    "@semantic-release/npm": "^11.0.0",
+    "@types/jest": "^29.5.3",
+    "jest": "^29.6.2",
+    "semantic-release": "^22.0.1",
+    "typescript": "^5.2.2"
+  }
+}

@@ -13,7 +13,8 @@
   },
   "files": [
     "cjs",
-    "mjs"
+    "mjs",
+    "openapi"
   ],
   "scripts": {
     "tsc": "tsc",

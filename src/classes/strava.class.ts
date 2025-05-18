@@ -12,7 +12,7 @@ import { SportType } from "../enums/sport-type.enum";
 export class Strava {
 
     private static API_URL = "https://www.strava.com/api/v3";
-    private static readonly OAUTH_URL = `${Strava.API_URL}/oauth`;
+    private static readonly OAUTH_URL = 'https://www.strava.com/oauth';
 
     private client: ReturnType<typeof createClient<paths>>;
     private authentication?: string;
@@ -41,6 +41,9 @@ export class Strava {
             token: () => {
                 const { client_id, client_secret } = this.configuration;
                 return `${Strava.OAUTH_URL}/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=authorization_code`;
+            },
+            deauthorize: () => {
+                return `${Strava.OAUTH_URL}/deauthorize`;
             }
         }
     }
@@ -77,6 +80,19 @@ export class Strava {
             this.authentication = oauthResponse.access_token;
             // Return the token
             return oauthResponse;
+        },
+        deauthorize: async () => {
+            const url = this.OAuth.url.deauthorize();
+            // Call to deauthorize
+            const response = await fetch(url);
+            // Technically, the response is not needed
+            // But it is good to check if the response is ok
+            if (!response.ok) {
+                // Throw the error and handle who implement it
+                throw response;
+            }
+            // Return the response
+            return response;
         },
         set: async (token: string) => {
             // Set the authentication
@@ -126,6 +142,7 @@ export class Strava {
             return response.data;
         },
         routes: async (page?: number, per_page?: number) => {
+            console.warn('Method athlete.routes not tested!');
             // Get the athlete
             const response = await this.client.GET('/athletes/{id}/routes', { params: { query: { page, per_page } } });
             // Throw the error if there is one

@@ -5,7 +5,4 @@ export interface IOAuthConfiguration {
     client_secret: string;
     redirect_uri: string;
     scopes: Scope[];
-    // authorization_uri: string;
-    // token_uri: string;
-    // revoke_uri: string;
 }

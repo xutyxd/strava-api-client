@@ -1,5 +1,5 @@
 
-export enum Scopes {
+export enum Scope {
     READ = "read",
     READ_ALL = "read_all",
     PROFILE_READ_ALL = "profile:read_all",

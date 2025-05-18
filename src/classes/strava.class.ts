@@ -77,6 +77,10 @@ export class Strava {
             this.authentication = oauthResponse.access_token;
             // Return the token
             return oauthResponse;
+        },
+        set: async (token: string) => {
+            // Set the authentication
+            this.authentication = token;
         }
     }
     

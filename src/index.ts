@@ -1,6 +1,3 @@
-
-import { Strava } from "./classes/strava.class";
-import { IOAuthConfiguration } from "./interfaces/oauth-configuration.interface";
-
+export * from "./classes";
 export * from "./enums";
-export { Strava, IOAuthConfiguration };
+export * from "./interfaces";

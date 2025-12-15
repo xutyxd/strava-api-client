@@ -4,5 +4,10 @@
     "module": "es6",
     "outDir": "mjs",
     "target": "es2019"
+  },
+  // Add the tsc-alias configuration block
+  "tsc-alias": {
+    // This is the key setting that attempts to add missing extensions
+    "resolveFullPaths": true 
   }
 }

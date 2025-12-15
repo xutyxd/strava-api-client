@@ -23,7 +23,7 @@
     "openapi:types": "openapi-typescript openapi/specification.json -o openapi/specification.d.ts",
     "build:commonjs": "rm -fr cjs/* && tsc -p tsconfig-cjs.json && bash cjs-formatter.sh",
     "build:test": "rm -fr test/* && tsc -p tsconfig-test.json && bash cjs-formatter.sh",
-    "build:mjs": "rm -fr mjs/* && tsc -p tsconfig.json && bash mjs-formatter.sh",
+    "build:mjs": "rm -fr mjs/* && tsc -p tsconfig.json && tsc-alias",
     "build": "npm run build:commonjs && npm run build:mjs && ./fixup.sh",
     "clean": "npm prune --production",
     "test": "npm run build:test && jest ./test --coverage"
@@ -61,6 +61,7 @@
     "openapi-typescript": "^7.8.0",
     "semantic-release": "^22.0.1",
     "swagger2openapi": "^7.0.8",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5.2.2"
   },
   "dependencies": {
